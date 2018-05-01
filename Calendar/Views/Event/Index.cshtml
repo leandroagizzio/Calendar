@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Calendar.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Calendar</h2>
+
+<p>
+    @Html.ActionLink("Create New", "New") 
+    @using (Html.BeginForm("Index", "Event", FormMethod.Get)) {
+    <div class="form-inline">
+        @Html.TextBox("start", null, new { @class = "form-control datepicker" })
+        @Html.TextBox("finish", null, new { @class = "form-control datepicker" })
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+        
+    }
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.FinishDate)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.FinishDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </td>
+        </tr>
+
+    }
+</table>
+
+@section scripts {
+
+
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+
+        });
+    </script>
+}

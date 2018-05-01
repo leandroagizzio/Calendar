@@ -1,0 +1,55 @@
+﻿@model Calendar.ViewModels.EventFormViewModel
+
+@{
+    ViewBag.Title = "EventForm";
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm("Save", "Event")) {
+
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Event.Name)
+        @Html.TextBoxFor(m => m.Event.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Event.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Event.Description)
+        @Html.TextBoxFor(m => m.Event.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Event.Description)
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Event.StartDate)
+        @Html.TextBoxFor(m => m.Event.StartDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @type = "datetime" })
+        @Html.ValidationMessageFor(m => m.Event.StartDate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Event.FinishDate)
+        @Html.TextBoxFor(m => m.Event.FinishDate, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @type = "datetime" })
+        @Html.ValidationMessageFor(m => m.Event.FinishDate)
+    </div>
+
+    @Html.HiddenFor(m => m.Event.Id)
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts {
+    
+
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+            
+        });
+    </script>
+}
