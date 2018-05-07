@@ -53,7 +53,7 @@ namespace Calendar.Controllers
             var viewModel = new EventFormViewModel {
                 Event = eventt
             };
-            return View("EventForm", eventt);
+            return View("EventForm", viewModel);
         }
 
         [HttpPost]
@@ -74,20 +74,9 @@ namespace Calendar.Controllers
                 eventtInDb.StartDate = eventt.StartDate;
                 eventtInDb.FinishDate = eventt.FinishDate;
             }
-            try { 
-                _context.SaveChanges();
-            } catch (DbEntityValidationException e) {
-                Console.WriteLine("oi");
-                foreach (var eve in e.EntityValidationErrors) {
-                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                    foreach (var ve in eve.ValidationErrors) {
-                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                            ve.PropertyName, ve.ErrorMessage);
-                    }
-                }
-                throw;
-            }
+            
+            _context.SaveChanges();
+                        
             return RedirectToAction("Index","Event");
         }
 
